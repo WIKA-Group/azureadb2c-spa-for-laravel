@@ -1,0 +1,30 @@
+{
+    "name": "wika-group/azureadb2c-spa-for-laravel",
+    "description": "Use Azure AD B2C single sign-on for Laravel single-page applications",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "WIKA Group",
+            "email": "webapps-admin@wika.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "version": "1.0.0",
+    "require": {
+        "php": "^8.1",
+        "socialiteproviders/azureadb2c": "^4.4",
+        "spatie/laravel-package-tools": "^1.16"
+    },
+    "autoload": {
+        "psr-4": {
+            "WikaGroup\\AzureAdB2cSpa\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WikaGroup\\AzureAdB2cSpa\\AzureAdB2cSpaServiceProvider"
+            ]
+        }
+    }
+}

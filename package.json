@@ -1,0 +1,6 @@
+{
+    "private": true,
+    "dependencies": {
+        "@azure/msal-browser": "^3.17.0"
+    }
+}
