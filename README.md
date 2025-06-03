@@ -70,3 +70,8 @@ if (window.Livewire !== undefined) {
     dispatchEvent("azureB2cLoginFailed")
 }
 ```
+
+### Configure Azure B2C
+You must add the URL of the SPA in the Azure Portal:
+
+<img src="https://github.com/WIKA-Group/azureadb2c-spa-for-laravel/blob/main/img/AzurePortalAppRegistration.jpg" width="700">
