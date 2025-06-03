@@ -17,8 +17,8 @@ return [
 
     'connection' => [
         'client_id' => env('AADB2C_CLIENT_ID'),
-        'domain' => env('AADB2C_DOMAIN'),  // 
-        'custom_domain' => env('AADB2C_CUSTOM_DOMAIN'), 
+        'domain' => env('AADB2C_DOMAIN'),
+        'custom_domain' => env('AADB2C_CUSTOM_DOMAIN'),
         'policy' => env('AADB2C_POLICY') ?: 'B2C_1_sign-up_and_sign-in_policy',
         'default_algorithm' => env('AADB2C_DEFAULT_ALGORITHM') ?: 'RS256',
     ],
