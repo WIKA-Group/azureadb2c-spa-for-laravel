@@ -1,16 +1,22 @@
 # Azure AD B2C single sign-on for Laravel single-page applications
 
 ## Installation
-**Install the package:**  
-`> composer require wika-group/azureadb2c-spa-for-laravel`
+**Install the package:**
+```bash
+composer require wika-group/azureadb2c-spa-for-laravel
+```
 
-**Publish assets:**  
-`> php artisan vendor:publish --tag=azureb2cspa-assets`
+**Publish assets:**
+```bash
+php artisan vendor:publish --tag=azureb2cspa-assets
+```
 
-**Publish migration:**  
-`> php artisan vendor:publish --tag=azureb2cspa-migrations`
+**Publish migration:**
+```bash
+php artisan vendor:publish --tag=azureb2cspa-migrations
+```
 
-**Extend .env and configure:**  
+**Extend .env and configure:**
 ```ini
 AADB2C_CLIENT_ID=
 AADB2C_DOMAIN=            # {your_domain}.b2clogin.com
@@ -18,6 +24,11 @@ AADB2C_CUSTOM_DOMAIN=     # Optional: set to use custom domain e.g. login.contos
 AADB2C_POLICY=            # Optional - Default: 'B2C_1_sign-up_and_sign-in_policy'
 AADB2C_DEFAULT_ALGORITHM= # Optional: Decoding algorithm JWK key. Default: 'RS256'
 AADB2C_OAUTH_COLUMN=      # Optional: Name of the OAuth ID column. Default 'oauth_id'
+```
+
+**Optional: Publish config:**
+```bash
+php artisan vendor:publish --tag=azureb2cspa-config
 ```
 
 ## Usage
