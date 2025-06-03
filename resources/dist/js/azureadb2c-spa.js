@@ -14,11 +14,25 @@ function initMSAL(msalConfig) {
     });
 }
 
-function handleResponse(resp) {
+async function handleResponse(resp) {
     if (resp !== null) {
         accountId = resp.account.homeAccountId;
         myMSALObj.setActiveAccount(resp.account);
-        showWelcomeMessage(resp.account);
+        const response = await fetch(b2cApiUrl, { method: "POST", body: JSON.stringify(resp.account) })
+        if (response.status === 200) {
+            const data = await response.json()
+            if (window.Livewire !== undefined) {
+                window.Livewire.emit("azureB2cLoginSucceeded", data.user)
+            } else {
+                dispatchEvent(new CustomEvent("azureB2cLoginSucceeded"))
+            }
+        } else {
+            if (window.Livewire !== undefined) {
+                window.Livewire.emit("azureB2cLoginFailed")
+            } else {
+                dispatchEvent("azureB2cLoginFailed")
+            }
+        }
     } else {
         // need to call getAccount here?
         const currentAccounts = myMSALObj.getAllAccounts();
@@ -39,6 +53,6 @@ async function b2cPopupLogin() {
     return myMSALObj.loginPopup({
         ...loginRequest, redirectUri: window.location.href
     }).then(handleResponse).catch(function (error) {
-        console.log(error);
+        console.error(error);
     });
 }
