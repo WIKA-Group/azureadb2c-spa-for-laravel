@@ -25,11 +25,6 @@ class SsoLoginController
         $user = User::where($oauthIdCol, $oauthId)
             ->firstOr(fn () => User::where('email', $email))->first();
 
-        
-        if (!$user->exists) {
-            return Response::json(['msg' => 'User not found'], 404);
-        }
-
         $user->$oauthIdCol = $oauthId;
         $user->name = $name;
         $user->save();
