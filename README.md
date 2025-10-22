@@ -18,6 +18,7 @@ php artisan vendor:publish --tag=azureb2cspa-migrations
 
 **Extend .env and configure:**
 ```ini
+AADB2C_TENANT_ID=
 AADB2C_CLIENT_ID=
 AADB2C_DOMAIN=            # {your_domain}.b2clogin.com
 AADB2C_CUSTOM_DOMAIN=     # Optional: set to use custom domain e.g. login.contoso.com

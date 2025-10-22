@@ -16,6 +16,7 @@ return [
     */
 
     'connection' => [
+        'tenant_id' => env('AADB2C_TENANT_ID'),
         'client_id' => env('AADB2C_CLIENT_ID'),
         'domain' => env('AADB2C_DOMAIN'),
         'custom_domain' => env('AADB2C_CUSTOM_DOMAIN'),
