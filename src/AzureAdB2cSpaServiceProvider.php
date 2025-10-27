@@ -3,8 +3,8 @@
 namespace WikaGroup\AzureAdB2cSpa;
 
 use Illuminate\Support\Facades\Blade;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class AzureAdB2cSpaServiceProvider extends PackageServiceProvider
 {
@@ -18,10 +18,10 @@ class AzureAdB2cSpaServiceProvider extends PackageServiceProvider
             ->hasRoute('api')
             ->hasAssets();
 
-        Blade::directive('azureB2cSpaScripts', function() {
+        Blade::directive('azureB2cSpaScripts', function () {
             return '<script src="' . url('vendor/azureb2cspa/js/msal-browser.min.js') . '"></script>' .
-                '<script src="' . url('vendor/azureb2cspa/js/azureadb2c-spa.js') . '"></script>' . 
-                implode("", file(join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'resources', 'views', 'login.blade.php'])));
+                '<script src="' . url('vendor/azureb2cspa/js/azureadb2c-spa.js') . '"></script>' .
+                implode('', file(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'resources', 'views', 'login.blade.php'])));
         });
     }
 }

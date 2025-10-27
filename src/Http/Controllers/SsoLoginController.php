@@ -5,16 +5,19 @@ namespace WikaGroup\AzureAdB2cSpa\Http\Controllers;
 use App\Models\User;
 use Firebase\JWT\JWK;
 use Firebase\JWT\JWT;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 class SsoLoginController
 {
-    public function __invoke(Request $request)
+    public function __invoke(\Illuminate\Http\Request $request)
     {
         $userData = $this->verifyToken($request->json('idToken'));
+        if ($userData === null) {
+            return Response::json(['msg' => 'Invalid token'], 400);
+        }
+
         $email = $userData['email'];
         $name = $userData['name'];
         $oauthId = $userData['sub'];
@@ -35,7 +38,9 @@ class SsoLoginController
         $user->password = '';
         $user->save();
 
-        Auth::loginUsingId($user->id);
+        if (Auth::loginUsingId($user->id) === false) {
+            return Response::json(['msg' => 'Failed to login with user'], 400);
+        }
 
         return Response::json(['msg' => 'OK', 'user' => ['name' => $name, 'email' => $email]]);
     }
