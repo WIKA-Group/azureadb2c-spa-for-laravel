@@ -11,8 +11,7 @@
     "minimum-stability": "stable",
     "version": "1.0.0",
     "require": {
-        "php": "^8.1",
-        "socialiteproviders/azureadb2c": "^4.4",
+        "php": "^8.2",
         "spatie/laravel-package-tools": "^1.16"
     },
     "autoload": {

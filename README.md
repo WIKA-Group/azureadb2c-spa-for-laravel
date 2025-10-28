@@ -1,5 +1,7 @@
 # Azure AD B2C single sign-on for Laravel single-page applications
 
+This composer package provides the necessary logic to handle Azure B2C logins with MSAL in the front end (with a pop-up) and back-end validation. It requires Livewire.
+
 ## Installation
 **Install the package:**
 ```bash
@@ -34,42 +36,45 @@ php artisan vendor:publish --tag=azureb2cspa-config
 
 ## Usage
 ### Add scripts to your views
-```
-@azureB2cSpaScripts()
+```html
+<!-- In main livewire component -->
+<livewire:azureB2cSpaScripts/>
 ```
 
-If you use it with Livewire or Wire Extender, you must add `@assets`:
-```
-@assets
-@azureB2cSpaScripts()
-@endassets
+In order to trigger a Livewire re-render, an event listener is required.  
+Therefore, the provided trait can be used inside the main Livewire component.
+
+```php
+use \WikaGroup\AzureAdB2cSpa\Traits\LoginLogoutEvents;
 ```
 
 If you use Wire Extender, you must [Enable browser session support](https://wire-elements.dev/blog/embed-livewire-components-using-wire-extender).
 
-### Add a button to trigger login
+### Add a button to trigger login or logout
 ```HTML
-<button onClick="b2cPopupLogin()">Login with Azure B2C</button>
+@auth
+    <button onClick="b2cLogout()">Logout</button>
+@endauth
+@guest
+    <button onClick="b2cPopupLogin()">Login with Azure B2C</button>
+@endguest
 ```
 
-### Hook into the login event
-You can add custom logic by using the emitted events:
-For succeeded login the following events are emitted:
-```js
-if (window.Livewire !== undefined) {
-    window.Livewire.emit("azureB2cLoginSucceeded", data.user)
-} else {
-    dispatchEvent(new CustomEvent("azureB2cLoginSucceeded"))
-}
-```
+### Hook into the events
+You can add custom logic by using the emitted events for login and logout:
 
-For a failed login the following events are emitted:
-```js
-if (window.Livewire !== undefined) {
-    window.Livewire.emit("azureB2cLoginFailed")
-} else {
-    dispatchEvent("azureB2cLoginFailed")
-}
+```php
+#[On('azureb2c-login-succeeded')]
+public function azureB2cLoginSucceeded(array $user) {}
+
+#[On('azureb2c-login-failed')]
+public function azureB2cLoginFailed(string $msg) {}
+
+#[On('azureb2c-logout-succeeded')]
+public function azureB2cLogoutSucceeded() {}
+
+#[On('azureb2c-logout-failed')]
+public function azureB2cLogoutFailed(string $msg) {}
 ```
 
 ### Configure Azure B2C
