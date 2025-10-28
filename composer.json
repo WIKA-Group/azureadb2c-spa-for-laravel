@@ -9,10 +9,11 @@
         }
     ],
     "minimum-stability": "stable",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "require": {
         "php": "^8.2",
-        "spatie/laravel-package-tools": "^1.16"
+        "spatie/laravel-package-tools": "^1.16",
+        "firebase/php-jwt": "^6.11"
     },
     "autoload": {
         "psr-4": {
