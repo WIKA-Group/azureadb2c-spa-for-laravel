@@ -46,16 +46,22 @@ class Scripts extends \Livewire\Component
 
         $oauthIdCol = config('azureadb2c.table.oauth_column');
 
-        /** @var \App\Models\User $user */
-        $user = User::where($oauthIdCol, $oauthId)->first()
-            ?? User::where('email', $email)->first()
-            ?? new User;
+        try {
+            /** @var \App\Models\User $user */
+            $user = User::where($oauthIdCol, $oauthId)->first()
+                ?? User::where('email', $email)->first()
+                ?? new User;
+    
+            $user->$oauthIdCol = $oauthId;
+            $user->email = $email;
+            $user->name = $name;
+            $user->password = '';
+            $user->save();
+        } catch (\Throwable $th) {
+            $this->dispatch('azureb2c-login-failed', msg: 'Failed to create or update user: ' . $th->getMessage());
 
-        $user->$oauthIdCol = $oauthId;
-        $user->email = $email;
-        $user->name = $name;
-        $user->password = '';
-        $user->save();
+            return;
+        }
 
         if (Auth::loginUsingId($user->id) === false) {
             $this->dispatch('azureb2c-login-failed', msg: 'Invalid request: Failed to login with user');
@@ -64,7 +70,7 @@ class Scripts extends \Livewire\Component
         }
 
         $this->js('window.msalConfigIsAlreadyLoggedIn = ' . (Auth::check() ? 'true' : 'false'));
-        $this->dispatch('azureb2c-login-succeeded', user: ['name' => $name, 'email' => $email]);
+        $this->dispatch('azureb2c-login-succeeded', user: $userData);
     }
 
     // MARK: Main functions
